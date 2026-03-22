@@ -1,0 +1,89 @@
+﻿<Window x:Class="StudentApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentApp"
+        mc:Ignorable="d"
+        Title="Студент" Height="650" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" CornerRadius="6">
+            <StackPanel>
+                <TextBlock Text="Информация о студенте" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Фамилия: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding LastName}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Имя: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding FirstName}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Дата рождения: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding BirthDate, StringFormat=dd.MM.yyyy}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Курс: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Course}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Группа: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Group}"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <GroupBox Header="Оценки" Grid.Row="1" Margin="0,15,0,0">
+            <DataGrid ItemsSource="{Binding GradeRows}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Семестр" Binding="{Binding Semester}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Предмет" Binding="{Binding Subject}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Оценка" Binding="{Binding Grade, UpdateSourceTrigger=PropertyChanged}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,15,0,15" CornerRadius="6">
+            <StackPanel>
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Средняя оценка по всем предметам: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding AverageAllText}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Выберите предмет: " FontWeight="Bold" VerticalAlignment="Center"/>
+                    <ComboBox Width="220"
+                              Margin="10,0,0,0"
+                              ItemsSource="{Binding Subjects}"
+                              SelectedItem="{Binding SelectedSubject}"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock Text="Средняя оценка по выбранному предмету: " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding AverageBySelectedSubjectText}"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <GroupBox Header="Задолженности" Grid.Row="3">
+            <ListBox ItemsSource="{Binding Debts}" Margin="10"/>
+        </GroupBox>
+    </Grid>
+</Window>
